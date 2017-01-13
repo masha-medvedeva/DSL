@@ -1,0 +1,69 @@
+MashaMedvedeva:DSL_project VV$ python3 pipeline.py 
+DSL-TRAIN.txt
+Available: 252000
+EXAMPLE: group6
+DSL-DEV.txt
+Available: 28000
+EXAMPLE: group6
+METHOD: stage 1, sentence-level, character ngrams
+fitting..
+Accuracy:  0.9906
+Classification report:
+              precision    recall  f1-score   support
+
+     group1       1.00      1.00      1.00      1075
+     group2       0.99      1.00      0.99       692
+     group3       1.00      1.00      1.00       711
+     group4       0.98      0.99      0.99       741
+     group5       0.99      0.97      0.98       710
+     group6       0.98      0.99      0.99      1071
+
+avg / total       0.99      0.99      0.99      5000
+
+Confusion matrix:
+ [[1071    1    0    2    1    0]
+ [   0  692    0    0    0    0]
+ [   0    0  710    0    0    1]
+ [   2    2    0  732    2    3]
+ [   0    2    0    7  687   14]
+ [   2    2    0    3    3 1061]]
+
+METHOD: stage 2, sentence-level, character ngrams
+GROUP: group1
+fitting..
+Accuracy:  0.666046511628
+Confusion matrix:
+ [[169 113  65]
+ [ 61 287  20]
+ [ 57  43 260]]
+GROUP: group2
+fitting..
+Accuracy:  0.877167630058
+Confusion matrix:
+ [[323  27]
+ [ 58 284]]
+GROUP: group3
+fitting..
+Accuracy:  0.857946554149
+Confusion matrix:
+ [[290  67]
+ [ 34 320]]
+GROUP: group4
+fitting..
+Accuracy:  0.812415654521
+Confusion matrix:
+ [[288  66]
+ [ 73 314]]
+GROUP: group5
+fitting..
+Accuracy:  0.781690140845
+Confusion matrix:
+ [[288  59]
+ [ 96 267]]
+GROUP: group6
+fitting..
+Accuracy:  0.683473389356
+Confusion matrix:
+ [[259  47  33]
+ [ 90 227  28]
+ [ 75  66 246]]

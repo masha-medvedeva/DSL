@@ -1,0 +1,67 @@
+DSL-TRAIN.txt
+Available: 252000
+EXAMPLE: group5
+DSL-DEV.txt
+Available: 28000
+EXAMPLE: group6
+METHOD: stage 1, sentence-level, character ngrams
+fitting..
+Accuracy:  0.993
+Classification report:
+              precision    recall  f1-score   support
+
+     group1       0.99      1.00      1.00      1054
+     group2       1.00      0.99      1.00       705
+     group3       1.00      1.00      1.00       707
+     group4       0.99      0.99      0.99       742
+     group5       0.99      0.98      0.99       719
+     group6       0.99      0.99      0.99      1073
+
+avg / total       0.99      0.99      0.99      5000
+
+Confusion matrix:
+ [[1050    2    0    0    2    0]
+ [   2  700    0    2    1    0]
+ [   0    0  707    0    0    0]
+ [   2    0    0  738    1    1]
+ [   1    0    0    5  706    7]
+ [   1    0    0    4    4 1064]]
+METHOD: stage 2, sentence-level, character ngrams
+GROUP: group1
+fitting..
+Accuracy:  0.685958254269
+Confusion matrix:
+ [[131 119  83]
+ [ 42 293  27]
+ [ 38  22 299]]
+GROUP: group2
+fitting..
+Accuracy:  0.900709219858
+Confusion matrix:
+ [[335   6]
+ [ 64 300]]
+GROUP: group3
+fitting..
+Accuracy:  0.876944837341
+Confusion matrix:
+ [[278  64]
+ [ 23 342]]
+GROUP: group4
+fitting..
+Accuracy:  0.83423180593
+Confusion matrix:
+ [[302  68]
+ [ 55 317]]
+GROUP: group5
+fitting..
+Accuracy:  0.809457579972
+Confusion matrix:
+ [[297  50]
+ [ 87 285]]
+GROUP: group6
+fitting..
+Accuracy:  0.727865796831
+Confusion matrix:
+ [[271  60  23]
+ [ 49 285  21]
+ [ 73  66 225]]
