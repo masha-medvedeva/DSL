@@ -1,0 +1,69 @@
+DSL-TRAIN.txt
+DSL-DEV.txt
+METHOD: stage 1, sentence-level, character ngrams, all the data
+fitting..
+Accuracy:  0.998285714286
+Classification report:
+              precision    recall  f1-score   support
+
+     group1       1.00      1.00      1.00      6000
+     group2       1.00      1.00      1.00      4000
+     group3       1.00      1.00      1.00      4000
+     group4       1.00      1.00      1.00      4000
+     group5       1.00      1.00      1.00      4000
+     group6       1.00      1.00      1.00      6000
+
+avg / total       1.00      1.00      1.00     28000
+
+Confusion matrix:
+ [[5989    3    0    3    3    2]
+ [   1 3995    0    2    2    0]
+ [   0    0 3999    1    0    0]
+ [   2    3    0 3995    0    0]
+ [   2    0    0    4 3984   10]
+ [   3    0    0    3    4 5990]]
+METHOD: stage 3, sentence-level, character ngrams + language labels from word-level predictions for 2nd half of the data, train on 2nd half
+SENTENCE LEVEL
+GROUP: group1
+fitting..
+True accuracy for this group:  0.847166666667
+Confusion matrix:
+ [[1477  289  234]
+ [ 210 1752   38]
+ [ 122   24 1854]]
+SENTENCE LEVEL
+GROUP: group2
+fitting..
+True accuracy for this group:  0.983
+Confusion matrix:
+ [[1972   28]
+ [  40 1960]]
+SENTENCE LEVEL
+GROUP: group3
+fitting..
+True accuracy for this group:  0.965
+Confusion matrix:
+ [[1933   67]
+ [  73 1927]]
+SENTENCE LEVEL
+GROUP: group4
+fitting..
+True accuracy for this group:  0.94825
+Confusion matrix:
+ [[1882  118]
+ [  89 1911]]
+SENTENCE LEVEL
+GROUP: group5
+fitting..
+True accuracy for this group:  0.9405
+Confusion matrix:
+ [[1916   84]
+ [ 154 1846]]
+SENTENCE LEVEL
+GROUP: group6
+fitting..
+True accuracy for this group:  0.906166666667
+Confusion matrix:
+ [[1771  130   99]
+ [ 110 1804   86]
+ [  71   67 1862]]
