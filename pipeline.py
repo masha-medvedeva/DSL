@@ -80,7 +80,7 @@ class Disjunction(TransformerMixin):
 				else:
 					feature[i] = 0
 			features.append(feature)
-		print(features)
+		#print(features)
 		return features
 
 def identity(x):
