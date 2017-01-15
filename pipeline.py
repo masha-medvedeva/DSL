@@ -26,7 +26,11 @@ def dict_words(Xtrain, Ztrain):
 	Ztrain_flat =  [item for sublist in Ztrain_word for item in sublist]
 	#print(Ztrain_flat)
 	for i in range(len(Xtrain_word_flat)):
-		d[Xtrain_word_flat[i]] = Ztrain_flat[i]
+		if Xtrain_word_flat[i] not in d:
+			d[Xtrain_word_flat[i]] = Ztrain_flat[i]
+		else:
+			d[Xtrain_word_flat[i]] = 0
+			#print (d[Xtrain_word_flat[i]])
 	return d
 
 def unique_set_generator(*args): # as many arguments as you want, returns the set of unique words to the first language
@@ -69,7 +73,14 @@ class Disjunction(TransformerMixin):
 					if word in set_unique[num]:
 						#print (word)
 						feature[num] += 1
+			k = feature.index(max(feature))
+			for i in range(3):
+				if i == k:
+					feature[i] = 1
+				else:
+					feature[i] = 0
 			features.append(feature)
+		print(features)
 		return features
 
 def identity(x):
