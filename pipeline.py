@@ -24,13 +24,11 @@ def dict_words(Xtrain, Ztrain):
 		Ztrain_word[num] = [Ztrain[num]] * len(Xtrain_word[num])
 	Xtrain_word_flat =  [item for sublist in Xtrain_word for item in sublist]
 	Ztrain_flat =  [item for sublist in Ztrain_word for item in sublist]
-	#print(Ztrain_flat)
 	for i in range(len(Xtrain_word_flat)):
 		if Xtrain_word_flat[i] not in d:
 			d[Xtrain_word_flat[i]] = Ztrain_flat[i]
 		else:
 			d[Xtrain_word_flat[i]] = 0
-			#print (d[Xtrain_word_flat[i]])
 	return d
 
 def unique_set_generator(*args): # as many arguments as you want, returns the set of unique words to the first language
@@ -39,6 +37,7 @@ def unique_set_generator(*args): # as many arguments as you want, returns the se
 		rest = set().union(*rest)
 		ubow = bow - rest
 		yield ubow
+
 
 class Disjunction(TransformerMixin):
 	def __init__(self, d, args):
@@ -84,16 +83,14 @@ class Disjunction(TransformerMixin):
 		return features
 
 def identity(x):
-    return list(itertools.chain.from_iterable(x))
+	return list(itertools.chain.from_iterable(x))
 
 
 def classify_groups(Xtrain, Ytrain, Xtest, Ytest):
-
 	pipeline = Pipeline([
 	('features', FeatureUnion([
-        ('wordvec', TfidfVectorizer(ngram_range = (1,6), preprocessor = lambda x: x, tokenizer = identity)),
-        ('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,3), preprocessor = lambda x: ' '.join(identity(x)))),
-        #('FunctionWords', features.FunctionWords(2500)),
+		('wordvec', TfidfVectorizer(ngram_range = (1,8), preprocessor = lambda x: x, analyzer = 'word')),
+		('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,8), preprocessor = lambda x: x)),
     ])),
     ('classifier', LinearSVC())
     ])  
@@ -102,7 +99,7 @@ def classify_groups(Xtrain, Ytrain, Xtest, Ytest):
 	Yguess = pipeline.predict(Xtest)
 	print('Accuracy: ', accuracy_score(Ytest, Yguess))
 	print ('Classification report:\n', classification_report(Ytest, Yguess, labels=["group1", "group2", "group3", "group4", "group5", "group6"]))
-	print ('Confusion matrix:\n', confusion_matrix(Ytest, Yguess, labels=["group1", "group2", "group3", "group4", "group5", "group6"]))
+	print ('Confusion matrix:\n', confusion_matrix(Ytest, Yguess, labels=["group1", "group2","group3", "group4", "group5", "group6"]))
 	return Yguess
 
 def languages_in_groups(group, Xtrain, Ytrain, Ztrain):
@@ -115,12 +112,10 @@ def languages_in_groups(group, Xtrain, Ytrain, Ztrain):
 	return group_lines, group_labels
 
 def classify_within_groups(group, d, Xtrain, Ytrain, Ztrain, Xtest, Ytest_guess, Ztest, Ytest):
-	print('SENTENCE LEVEL')
 	print("GROUP:", group)
 	Xtrain_group, Ztrain_group = languages_in_groups(group, Xtrain, Ytrain, Ztrain)
 	Xtest_group, Ztest_group = languages_in_groups(group, Xtest, Ytest_guess, Ztest)
-	Xtest_group, Ztest_group_true = languages_in_groups(group, Xtest, Ytest, Ztest)
-	#print(d)
+	#Xtest_group_true, Ztest_group_true = languages_in_groups(group, Xtest, Ytest, Ztest)
 	
 	if group == 'group1':
 		args = ['bs','hr','sr']
@@ -136,19 +131,18 @@ def classify_within_groups(group, d, Xtrain, Ytrain, Ztrain, Xtest, Ytest_guess,
 		args = ['es-ES', 'es-AR', 'es-PE']
 	pipeline = Pipeline([
 	('features', FeatureUnion([
-        ('wordvec', TfidfVectorizer(ngram_range = (1,8), preprocessor = lambda x: x, tokenizer = identity)),
-        ('lang_labels', Disjunction(d, args)),
-        ('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,8), preprocessor = lambda x: ' '.join(identity(x)))),
-        #('FunctionWords', features.FunctionWords(2500)),
+		('wordvec', TfidfVectorizer(ngram_range = (1,8), preprocessor = lambda x: x, analyzer = 'word')),
+        #('lang_labels', Disjunction(d, args)),
+        ('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,8))),        
     ])),
     ('classifier', LinearSVC())
     ])  
 	print('fitting..')
 	pipeline.fit(Xtrain_group, Ztrain_group)
 	Zguess_group = pipeline.predict(Xtest_group)
-	print('True accuracy for this group: ', accuracy_score(Ztest_group_true, Zguess_group))
-	print('Classification report:\n', classification_report(Ztest_group_true, Zguess_group))
-	print ('Confusion matrix:\n', confusion_matrix(Ztest_group_true, Zguess_group))
+	print('True accuracy for this group: ', accuracy_score(Ztest_group, Zguess_group))
+	print('Classification report:\n', classification_report(Ztest_group, Zguess_group))
+	print ('Confusion matrix:\n', confusion_matrix(Ztest_group, Zguess_group))
 
 
 if __name__ == '__main__': 
@@ -162,7 +156,7 @@ if __name__ == '__main__':
 	#predicted values of the groups
 	Ytest_guess = classify_groups(Xtrain, Ytrain, Xtest, Ytest)
 
-	print('METHOD: stage 2-3, sentence-level, character ngrams + Disjunction')
+	print('METHOD: stage 2-3, sentence-level, character ngrams, no Disjunction')
 	groups = ["group1", "group2", "group3", "group4", "group5", "group6"]
 	for group in groups:
 
