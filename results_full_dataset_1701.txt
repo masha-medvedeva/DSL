@@ -1,0 +1,200 @@
+DSL-TRAIN.txt
+DSL-DEV.txt
+METHOD: stage 1, sentence-level, character ngrams
+fitting..
+Accuracy:  0.998642857143
+Classification report:
+              precision    recall  f1-score   support
+
+     group1       1.00      1.00      1.00      6000
+     group2       1.00      1.00      1.00      4000
+     group3       1.00      1.00      1.00      4000
+     group4       1.00      1.00      1.00      4000
+     group5       1.00      1.00      1.00      4000
+     group6       1.00      1.00      1.00      6000
+
+avg / total       1.00      1.00      1.00     28000
+
+Confusion matrix:
+ [[5989    2    0    4    1    4]
+ [   2 3993    0    1    2    2]
+ [   0    0 3999    1    0    0]
+ [   1    0    0 3998    1    0]
+ [   1    0    0    5 3989    5]
+ [   1    0    0    2    3 5994]]
+METHOD: stage 2-3, sentence-level, character ngrams, no Disjunction
+GROUP: group1
+fitting..
+True accuracy for this group:  0.855188521855
+/Library/Frameworks/Python.framework/Versions/3.5/lib/python3.5/site-packages/sklearn/metrics/classification.py:1074: UndefinedMetricWarning: Precision and F-score are ill-defined and being set to 0.0 in labels with no predicted samples.
+  'precision', 'predicted', average, warn_for)
+Classification report:
+              precision    recall  f1-score   support
+
+         bs       0.82      0.76      0.79      1995
+      es-PE       0.00      0.00      0.00         1
+      fr-FR       0.00      0.00      0.00         1
+         hr       0.87      0.87      0.87      1996
+         id       0.00      0.00      0.00         2
+      pt-PT       0.00      0.00      0.00         1
+         sr       0.87      0.93      0.90      1998
+
+avg / total       0.85      0.86      0.85      5994
+
+Confusion matrix:
+ [[1522    0    0  241    0    0  232]
+ [   1    0    0    0    0    0    0]
+ [   0    0    0    1    0    0    0]
+ [ 211    0    0 1744    0    0   41]
+ [   1    0    0    0    0    0    1]
+ [   1    0    0    0    0    0    0]
+ [ 125    0    0   13    0    0 1860]]
+GROUP: group2
+fitting..
+True accuracy for this group:  0.984981226533
+Classification report:
+              precision    recall  f1-score   support
+
+         bs       0.00      0.00      0.00         1
+         hr       0.00      0.00      0.00         1
+         id       0.98      0.99      0.98      1993
+         my       0.99      0.99      0.99      2000
+
+avg / total       0.98      0.98      0.98      3995
+
+Confusion matrix:
+ [[   0    0    1    0]
+ [   0    0    1    0]
+ [   0    0 1964   29]
+ [   0    0   29 1971]]
+GROUP: group3
+fitting..
+True accuracy for this group:  0.964991247812
+Classification report:
+              precision    recall  f1-score   support
+
+      fa-AF       0.97      0.96      0.96      2000
+      fa-IR       0.96      0.97      0.97      1999
+
+avg / total       0.97      0.96      0.96      3999
+
+Confusion matrix:
+ [[1922   78]
+ [  62 1937]]
+GROUP: group4
+fitting..
+True accuracy for this group:  0.938917975567
+Classification report:
+              precision    recall  f1-score   support
+
+         bs       0.00      0.00      0.00         1
+      es-ES       0.00      0.00      0.00         2
+      fa-IR       0.00      0.00      0.00         1
+      fr-CA       0.94      0.94      0.94      2000
+      fr-FR       0.93      0.94      0.94      1998
+         hr       0.00      0.00      0.00         3
+         id       0.00      0.00      0.00         1
+      pt-BR       0.00      0.00      0.00         1
+      pt-PT       0.00      0.00      0.00         4
+
+avg / total       0.94      0.94      0.94      4011
+
+Confusion matrix:
+ [[   0    0    0    0    1    0    0    0    0]
+ [   0    0    0    0    2    0    0    0    0]
+ [   0    0    0    0    1    0    0    0    0]
+ [   0    0    0 1882  118    0    0    0    0]
+ [   0    0    0  114 1884    0    0    0    0]
+ [   0    0    0    0    3    0    0    0    0]
+ [   0    0    0    0    1    0    0    0    0]
+ [   0    0    0    0    1    0    0    0    0]
+ [   0    0    0    0    4    0    0    0    0]]
+GROUP: group5
+fitting..
+True accuracy for this group:  0.942192192192
+Classification report:
+              precision    recall  f1-score   support
+
+         bs       0.00      0.00      0.00         1
+      es-AR       0.00      0.00      0.00         1
+      es-ES       0.00      0.00      0.00         2
+      fr-FR       0.00      0.00      0.00         1
+         id       0.00      0.00      0.00         2
+      pt-BR       0.94      0.95      0.94      1995
+      pt-PT       0.95      0.94      0.94      1994
+
+avg / total       0.94      0.94      0.94      3996
+
+Confusion matrix:
+ [[   0    0    0    0    0    0    1]
+ [   0    0    0    0    0    1    0]
+ [   0    0    0    0    0    1    1]
+ [   0    0    0    0    0    0    1]
+ [   0    0    0    0    0    1    1]
+ [   0    0    0    0    0 1899   96]
+ [   0    0    0    0    0  128 1866]]
+GROUP: group6
+fitting..
+True accuracy for this group:  0.901415487094
+Classification report:
+              precision    recall  f1-score   support
+
+         bs       0.00      0.00      0.00         2
+      es-AR       0.92      0.88      0.90      1999
+      es-ES       0.89      0.90      0.90      1996
+      es-PE       0.90      0.93      0.91      1999
+         id       0.00      0.00      0.00         2
+      pt-BR       0.00      0.00      0.00         4
+      pt-PT       0.00      0.00      0.00         1
+         sr       0.00      0.00      0.00         2
+
+avg / total       0.90      0.90      0.90      6005
+
+Confusion matrix:
+ [[   0    0    2    0    0    0    0    0]
+ [   0 1758  135  106    0    0    0    0]
+ [   0   94 1799  103    0    0    0    0]
+ [   0   68   75 1856    0    0    0    0]
+ [   0    0    2    0    0    0    0    0]
+ [   0    1    2    1    0    0    0    0]
+ [   0    0    1    0    0    0    0    0]
+ [   0    0    2    0    0    0    0    0]]
+
+
+Overall accuracy:  0.923714285714
+Overall classification report:
+              precision    recall  f1-score   support
+
+         bs       0.82      0.76      0.79      2000
+         hr       0.87      0.87      0.87      2000
+         sr       0.87      0.93      0.90      2000
+         my       0.99      0.99      0.99      2000
+         id       0.98      0.98      0.98      2000
+      fa-AF       0.97      0.96      0.96      2000
+      fa-IR       0.96      0.97      0.96      2000
+      fr-CA       0.94      0.94      0.94      2000
+      fr-FR       0.93      0.94      0.94      2000
+      pt-BR       0.94      0.95      0.94      2000
+      pt-PT       0.95      0.93      0.94      2000
+      es-ES       0.89      0.90      0.90      2000
+      es-AR       0.92      0.88      0.90      2000
+      es-PE       0.90      0.93      0.91      2000
+
+avg / total       0.92      0.92      0.92     28000
+
+Overall confusion matrix:
+ [[1522  241  232    0    1    0    0    0    1    0    1    2    0    0]
+ [ 211 1744   41    0    1    0    0    0    3    0    0    0    0    0]
+ [ 125   13 1860    0    0    0    0    0    0    0    0    2    0    0]
+ [   0    0    0 1971   29    0    0    0    0    0    0    0    0    0]
+ [   1    0    1   29 1964    0    0    0    1    1    1    2    0    0]
+ [   0    0    0    0    0 1922   78    0    0    0    0    0    0    0]
+ [   0    0    0    0    0   62 1937    0    1    0    0    0    0    0]
+ [   0    0    0    0    0    0    0 1882  118    0    0    0    0    0]
+ [   0    1    0    0    0    0    0  114 1884    0    1    0    0    0]
+ [   0    0    0    0    0    0    0    0    1 1899   96    2    1    1]
+ [   1    0    0    0    0    0    0    0    4  128 1866    1    0    0]
+ [   0    0    0    0    0    0    0    0    2    1    1 1799   94  103]
+ [   0    0    0    0    0    0    0    0    0    1    0  135 1758  106]
+ [   1    0    0    0    0    0    0    0    0    0    0   75   68 1856]]
+Time: 2579.6710600852966
