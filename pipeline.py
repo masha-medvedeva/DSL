@@ -62,9 +62,9 @@ class Disjunction(TransformerMixin):
 		set_unique = []
 		for unique_set_of_words in unique_set_generator(set(set1), set(set2), set(set3)):
 			set_unique.append(unique_set_of_words)
-		
+
 		features = []
-		
+
 		for sentence in Xtrain_word:
 			feature = [0, 0, 0]
 			for num in range(3):
@@ -89,11 +89,11 @@ def identity(x):
 def classify_groups(Xtrain, Ytrain, Xtest, Ytest):
 	pipeline = Pipeline([
 	('features', FeatureUnion([
-		('wordvec', TfidfVectorizer(ngram_range = (1,8), preprocessor = lambda x: x, analyzer = 'word')),
-		('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,8), preprocessor = lambda x: x)),
+		('wordvec', TfidfVectorizer(ngram_range = (1,4), preprocessor = lambda x: x, analyzer = 'word')),
+		('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,6), preprocessor = lambda x: x)),
     ])),
     ('classifier', LinearSVC())
-    ])  
+    ])
 	print('fitting..')
 	pipeline.fit(Xtrain, Ytrain)
 	Yguess = pipeline.predict(Xtest)
@@ -116,7 +116,7 @@ def classify_within_groups(group, d, Xtrain, Ytrain, Ztrain, Xtest, Ytest_guess,
 	Xtrain_group, Ztrain_group = languages_in_groups(group, Xtrain, Ytrain, Ztrain)
 	Xtest_group, Ztest_group = languages_in_groups(group, Xtest, Ytest_guess, Ztest)
 	#Xtest_group_true, Ztest_group_true = languages_in_groups(group, Xtest, Ytest, Ztest)
-	
+
 	if group == 'group1':
 		args = ['bs','hr','sr']
 	elif group == 'group2':
@@ -133,19 +133,22 @@ def classify_within_groups(group, d, Xtrain, Ytrain, Ztrain, Xtest, Ytest_guess,
 	('features', FeatureUnion([
 		('wordvec', TfidfVectorizer(ngram_range = (1,8), preprocessor = lambda x: x, analyzer = 'word')),
         #('lang_labels', Disjunction(d, args)),
-        ('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,8))),        
+        ('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,8))),
     ])),
     ('classifier', LinearSVC())
-    ])  
+    ])
 	print('fitting..')
 	pipeline.fit(Xtrain_group, Ztrain_group)
 	Zguess_group = pipeline.predict(Xtest_group)
+	overall_true.extend(Ztest_group)
+	overall_pred.extend(Zguess_group)
 	print('True accuracy for this group: ', accuracy_score(Ztest_group, Zguess_group))
 	print('Classification report:\n', classification_report(Ztest_group, Zguess_group))
 	print ('Confusion matrix:\n', confusion_matrix(Ztest_group, Zguess_group))
 
 
-if __name__ == '__main__': 
+
+if __name__ == '__main__':
 	start = time.time()
 	#load the data
 	Xtrain, Ytrain, Ztrain = prep.extract_words_and_labels('TRAIN')
@@ -158,10 +161,15 @@ if __name__ == '__main__':
 
 	print('METHOD: stage 2-3, sentence-level, character ngrams, no Disjunction')
 	groups = ["group1", "group2", "group3", "group4", "group5", "group6"]
+	overall_true = []
+	overall_pred = []
 	for group in groups:
 
 		classify_within_groups(group, d, Xtrain, Ytrain, Ztrain, Xtest, Ytest_guess, Ztest, Ytest)
-	
+
 	end = time.time()
 	duration = end - start
-	print(duration)
+print("\n\nOverall accuracy: ", accuracy_score(overall_true, overall_pred))
+print('Overall classification report:\n', classification_report(overall_true, overall_pred, labels=['bs','hr','sr','my','id','fa-AF','fa-IR','fr-CA','fr-FR','pt-BR','pt-PT','es-ES','es-AR','es-PE']))
+print('Overall confusion matrix:\n', confusion_matrix(overall_true, overall_pred, labels=['bs','hr','sr','my','id','fa-AF','fa-IR','fr-CA','fr-FR','pt-BR','pt-PT','es-ES','es-AR','es-PE']))
+print(duration)
