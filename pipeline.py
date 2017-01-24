@@ -89,7 +89,7 @@ def identity(x):
 def classify_groups(Xtrain, Ytrain, Xtest, Ytest):
 	pipeline = Pipeline([
 	('features', FeatureUnion([
-		('wordvec', TfidfVectorizer(ngram_range = (1,4), preprocessor = lambda x: x, analyzer = 'word')),
+		#('wordvec', TfidfVectorizer(ngram_range = (1,4), preprocessor = lambda x: x, analyzer = 'word')),
 		('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,6), preprocessor = lambda x: x)),
     ])),
     ('classifier', LinearSVC())
@@ -97,6 +97,13 @@ def classify_groups(Xtrain, Ytrain, Xtest, Ytest):
 	print('fitting..')
 	pipeline.fit(Xtrain, Ytrain)
 	Yguess = pipeline.predict(Xtest)
+	
+
+	for i in range(len(Yguess)):
+		if Yguess[i] != Ytest[i]:
+			print (Xtest[i],Ytest[i], Yguess[i])
+
+
 	print('Accuracy: ', accuracy_score(Ytest, Yguess))
 	print ('Classification report:\n', classification_report(Ytest, Yguess, labels=["group1", "group2", "group3", "group4", "group5", "group6"]))
 	print ('Confusion matrix:\n', confusion_matrix(Ytest, Yguess, labels=["group1", "group2","group3", "group4", "group5", "group6"]))
@@ -131,9 +138,12 @@ def classify_within_groups(group, d, Xtrain, Ytrain, Ztrain, Xtest, Ytest_guess,
 		args = ['es-ES', 'es-AR', 'es-PE']
 	pipeline = Pipeline([
 	('features', FeatureUnion([
-		('wordvec', TfidfVectorizer(ngram_range = (1,8), preprocessor = lambda x: x, analyzer = 'word')),
+		#('wordvec', TfidfVectorizer(ngram_range = (1,8), preprocessor = lambda x: x, analyzer = 'word')),
         #('lang_labels', Disjunction(d, args)),
-        ('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,8))),
+        #('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,8))),
+        ('wordvec', TfidfVectorizer(ngram_range = (1,2), preprocessor = lambda x: x, analyzer = 'word')),
+        ('charvec', TfidfVectorizer(analyzer = 'char', ngram_range = (1,5))),
+
     ])),
     ('classifier', LinearSVC())
     ])
@@ -152,7 +162,12 @@ if __name__ == '__main__':
 	start = time.time()
 	#load the data
 	Xtrain, Ytrain, Ztrain = prep.extract_words_and_labels('TRAIN')
+	#Xtrain, Ytrain, Ztrain = Xtrain2[:-50000], Ytrain2[:-50000], Ztrain2[:-50000]
 	Xtest, Ytest, Ztest = prep.extract_words_and_labels('DEV')
+	#Xtest, Ytest, Ztest = prep.extract_words_and_labels('TRAIN')
+	#Xtest, Ytest, Ztest = Xtrain2[-50000:], Ytrain2[-50000:], Ztrain2[-50000:]
+
+
 	d = dict_words(Xtrain, Ztrain)
 	print('METHOD: stage 1, sentence-level, character ngrams')
 
@@ -170,6 +185,7 @@ if __name__ == '__main__':
 	end = time.time()
 	duration = end - start
 print("\n\nOverall accuracy: ", accuracy_score(overall_true, overall_pred))
+print("F-score: ", f1_score(overall_true, overall_pred))
 print('Overall classification report:\n', classification_report(overall_true, overall_pred, labels=['bs','hr','sr','my','id','fa-AF','fa-IR','fr-CA','fr-FR','pt-BR','pt-PT','es-ES','es-AR','es-PE']))
 print('Overall confusion matrix:\n', confusion_matrix(overall_true, overall_pred, labels=['bs','hr','sr','my','id','fa-AF','fa-IR','fr-CA','fr-FR','pt-BR','pt-PT','es-ES','es-AR','es-PE']))
 print(duration)
